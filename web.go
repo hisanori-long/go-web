@@ -51,12 +51,19 @@ func index(w http.ResponseWriter, rq *http.Request, tmp *template.Template) {
 
 // hello handler
 func hello(w http.ResponseWriter, rq *http.Request, tmp *template.Template) {
+	msg := "type name and password:"
+	if rq.Method == "POST" {
+		nm := rq.PostFormValue("name")
+		pw := rq.PostFormValue("password")
+		msg = "name: " + nm + ", password: " + pw
+	}
+
 	item := struct {
 		Title   string
 		Message string
 	}{
-		Title:   "Send vlues",
-		Message: "YES! this is message!!",
+		Title:   "Send Values",
+		Message: msg,
 	}
 
 	er := tmp.Execute(w, item)
