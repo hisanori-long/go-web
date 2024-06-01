@@ -1,4 +1,4 @@
-module hisanori-long/go-web
+module github.com/hisanori-long/go-web
 
 go 1.22.2
 
