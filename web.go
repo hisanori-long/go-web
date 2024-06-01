@@ -1,15 +1,21 @@
 package main
 
-import "net/http"
+import (
+	"log"
+	"net/http"
+	"text/template"
+)
 
 func main() {
-	msg := `<html><body>
-	<h1> Hello </h1>
-	<p> This is GO-server! </p>
-	</body></html>`
-
-	hh := func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte(msg))
+	tf, er := template.ParseFiles("templates/hello.html")
+	if er != nil {
+		tf, _ = template.New("index").Parse("<html><body><h1>NO TEMPLATE.</h1></bod></html>")
+	}
+	hh := func(w http.ResponseWriter, rq *http.Request) {
+		er = tf.Execute(w, nil)
+		if er != nil {
+			log.Fatal(er)
+		}
 	}
 
 	http.HandleFunc("/hello", hh)
