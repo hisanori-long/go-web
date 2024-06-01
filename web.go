@@ -49,27 +49,20 @@ func index(w http.ResponseWriter, rq *http.Request, tmp *template.Template) {
 	}
 }
 
-var flg bool = true
-
 // hello handler
 func hello(w http.ResponseWriter, rq *http.Request, tmp *template.Template) {
 	item := struct {
-		Flg      bool
-		Title    string
-		Message  string
-		JMessage string
+		Title string
+		Items []string
 	}{
-		Flg:      flg,
-		Title:    "Send vlues",
-		Message:  "This is Sample Message.",
-		JMessage: "これはサンプルです。",
+		Title: "Send vlues",
+		Items: []string{"one", "two", "three"},
 	}
 
 	er := tmp.Execute(w, item)
 	if er != nil {
 		log.Fatal(er)
 	}
-	flg = !flg
 }
 
 // main program
